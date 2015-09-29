@@ -2,6 +2,8 @@
 import os
 from django.core.exceptions import ImproperlyConfigured
 
+from unipath import Path
+
 
 def get_env_variable(var_name):
     """Get evnironment variable or return exception."""
@@ -11,8 +13,7 @@ def get_env_variable(var_name):
         msg = "Set the {} environment variable".format(var_name)
         raise ImproperlyConfigured(msg)
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = Path(__file__).ancestor(3)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -32,7 +33,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'documents'
+    'documents',
+    'frontend'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,7 +53,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR.child("templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,3 +98,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR.child('static')
+print(STATIC_ROOT)
+print(BASE_DIR)

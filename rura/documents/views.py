@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from .models import (Firm, Contractor, InvoiceResponsible, OtherResponsible,
                      Delivered, AgreementSide, Sender, Invoice, Agreement,
@@ -11,12 +10,14 @@ from .serializers import (FirmSerializer, ContractorSerializer,
                           OtherSerializer)
 # Create your views here.
 
+
 class FirmViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing Firm instances.
     """
     serializer_class = FirmSerializer
     queryset = Firm.objects.all()
+
 
 class ContractorViewSet(viewsets.ModelViewSet):
     """
@@ -25,12 +26,14 @@ class ContractorViewSet(viewsets.ModelViewSet):
     serializer_class = ContractorSerializer
     queryset = Contractor.objects.all()
 
+
 class InvoiceResponsibleViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing InvoiceResponsible instances.
     """
     serializer_class = InvoiceResponsibleSerializer
     queryset = InvoiceResponsible.objects.all()
+
 
 class OtherResponsibleViewSet(viewsets.ModelViewSet):
     """
@@ -39,12 +42,14 @@ class OtherResponsibleViewSet(viewsets.ModelViewSet):
     serializer_class = OtherResponsibleSerializer
     queryset = OtherResponsible.objects.all()
 
+
 class DeliveredViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing Delivered instances.
     """
     serializer_class = DeliveredSerializer
     queryset = Delivered.objects.all()
+
 
 class AgreementSideViewSet(viewsets.ModelViewSet):
     """
@@ -53,12 +58,14 @@ class AgreementSideViewSet(viewsets.ModelViewSet):
     serializer_class = AgreementSideSerializer
     queryset = AgreementSide.objects.all()
 
+
 class SenderViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing Sender instances.
     """
     serializer_class = SenderSerializer
     queryset = Sender.objects.all()
+
 
 class InvoiceViewSet(viewsets.ModelViewSet):
     """
@@ -67,12 +74,14 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     serializer_class = InvoiceSerializer
     queryset = Invoice.objects.all()
 
+
 class AgreementViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing Agreement instances.
     """
     serializer_class = AgreementSerializer
     queryset = Agreement.objects.all()
+
 
 class OtherViewSet(viewsets.ModelViewSet):
     """
