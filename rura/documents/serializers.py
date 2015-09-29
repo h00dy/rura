@@ -3,10 +3,15 @@ from .models import (Firm, Contractor, InvoiceResponsible, OtherResponsible,
                      Delivered, AgreementSide, Sender, Tax, Invoice, Agreement,
                      Other)
 
+class TaxSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tax
+        fields = ('value',)
+
 class FirmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Firm
-        fields = ('name',)
+        fields = ('name', 'id')
 
 class ContractorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,6 +44,7 @@ class SenderSerializer(serializers.ModelSerializer):
         fields = ('name',)
 
 class InvoiceSerializer(serializers.ModelSerializer):
+    tax = TaxSerializer()
     class Meta:
         model = Invoice
 
