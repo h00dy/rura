@@ -2,13 +2,13 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import (Firm, Contractor, InvoiceResponsible, OtherResponsible,
                      Delivered, AgreementSide, Sender, Invoice, Agreement,
-                     Other)
+                     Other, Tax)
 from .serializers import (FirmSerializer, ContractorSerializer,
                           InvoiceResponsibleSerializer,
                           OtherResponsibleSerializer, DeliveredSerializer,
                           AgreementSideSerializer, SenderSerializer,
                           InvoiceSerializer, AgreementSerializer,
-                          OtherSerializer)
+                          OtherSerializer, TaxSerializer)
 # Create your views here.
 
 class FirmViewSet(viewsets.ModelViewSet):
@@ -17,6 +17,13 @@ class FirmViewSet(viewsets.ModelViewSet):
     """
     serializer_class = FirmSerializer
     queryset = Firm.objects.all()
+
+class TaxViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for viewing and editing Tax instances.
+    """
+    serializer_class = TaxSerializer
+    queryset = Tax.objects.all()
 
 class ContractorViewSet(viewsets.ModelViewSet):
     """
@@ -66,6 +73,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     """
     serializer_class = InvoiceSerializer
     queryset = Invoice.objects.all()
+    filter_fields = ('firm__name', 'firm__id')
 
 class AgreementViewSet(viewsets.ModelViewSet):
     """
@@ -73,6 +81,7 @@ class AgreementViewSet(viewsets.ModelViewSet):
     """
     serializer_class = AgreementSerializer
     queryset = Agreement.objects.all()
+    filter_fields = ('firm__name', 'firm__id')
 
 class OtherViewSet(viewsets.ModelViewSet):
     """
@@ -80,3 +89,4 @@ class OtherViewSet(viewsets.ModelViewSet):
     """
     serializer_class = OtherSerializer
     queryset = Other.objects.all()
+    filter_fields = ('firm__name', 'firm__id')
