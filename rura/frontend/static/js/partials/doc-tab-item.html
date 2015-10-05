@@ -1,0 +1,102 @@
+<div class="row">
+  <h4>
+  <form class="form-horizontal">
+    <div class="form-group well">
+      <label for="selectInOut" class="col-md-2 control-label">Rodzaj dokumentów</label>
+      <div class="col-md-2">
+        <select id="selectInOut" class="form-control" ng-model="selected.document_type">
+          <option ng-selected="true" value="IN">Dokumenty Przychodzące</option>
+          <option value="OUT">Dokumenty Wychodzące</option>
+        </select>
+      </div>
+      <div class="col-md-1 col-md-offset-6">
+        <button type="button" class="btn btn-success btn-lg">
+          <strong>
+            <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>&nbspNowy Dokument
+          </strong>
+        </button>
+      </div>
+    </div>
+  </form>
+  </h4>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead ng-if="type==='invoice'">
+      <tr>
+        <th>received_date</th>
+        <th>registry_nr</th>
+        <th>netto</th>
+        <th>brutto</th>
+        <th>paid</th>
+        <th>payment_date</th>
+        <th>contractor</th>
+        <th>tax</th>
+        <th>responsible</th>
+        <th>delivered</th>
+        <th>scan</th>
+        <th>notes</th>
+      </tr>
+    </thead>
+    <thead ng-if="type==='agreement'">
+      <tr>
+        <th>received_date</th>
+        <th>registry_nr</th>
+        <th>agr_date</th>
+        <th>agr_subject</th>
+        <th>agr_side</th>
+        <th>scan</th>
+        <th>notes</th>
+      </tr>
+    </thead>
+    <thead ng-if="type==='other'">
+      <tr>
+        <th>received_date</th>
+        <th>registry_nr</th>
+        <th>description</th>
+        <th>sender</th>
+        <th>responsible</th>
+        <th>scan</th>
+        <th>notes</th>
+      </tr>
+    </thead>
+    <tbody ng-if="type==='invoice'">
+      <tr ng-repeat="d in docs | filter: selected">
+        <td>{{d.received_date}}</td>
+        <td>{{d.registry_nr}}</td>
+        <td>{{d.netto}}</td>
+        <td>{{d.brutto}}</td>
+        <td>{{d.paid}}</td>
+        <td>{{d.payment_date}}</td>
+        <td>{{d.contractor}}</td>
+        <td>{{d.tax}}</td>
+        <td>{{d.responsible}}</td>
+        <td>{{d.delivered}}</td>
+        <td>{{d.scan}}</td>
+        <td>{{d.notes}}</td>
+      </tr>
+    </tbody>
+    <tbody ng-if="type==='agreement'">
+      <tr ng-repeat="d in docs | filter: selected">
+        <td>{{d.received_date}}</td>
+        <td>{{d.registry_nr}}</td>
+        <td>{{d.agr_date}}</td>
+        <td>{{d.agr_subject}}</td>
+        <td>{{d.agr_side}}</td>
+        <td>{{d.scan}}</td>
+        <td>{{d.notes}}</td>
+      </tr>
+    </tbody>
+    <tbody ng-if="type==='other'">
+      <tr ng-repeat="d in docs | filter: selected">
+        <td>{{d.received_date}}</td>
+        <td>{{d.registry_nr}}</td>
+        <td>{{d.description}}</td>
+        <td>{{d.sender}}</td>
+        <td>{{d.responsible}}</td>
+        <td>{{d.scan}}</td>
+        <td>{{d.notes}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

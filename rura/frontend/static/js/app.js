@@ -1,20 +1,10 @@
 (function(){
-    var app = angular.module("document", []);
+    angular.module("document", ['ngResource', 'ui.bootstrap', 'ui.router'])
 
-    app.controller("FirmController", ['$http', function($http){
-        var scope = this;
-        scope.firms = [];
-        scope.activeFirm = {};
+    .config(['$resourceProvider', '$stateProvider', '$urlRouterProvider', function($resourceProvider, $stateProvider, $urlRouterProvider) {
+        // Don't strip trailing slashes from calculated URLs
+        $resourceProvider.defaults.stripTrailingSlashes = false;
 
-        $http.get("/api/firms/").then(function(response){
-            scope.firms = response.data;
-        });
-
-        var isSet = function(data){
-            return scope.activeFirm === data;
-        };
-        var setActive = function(data){
-            scope.firm.activeFirm = data;
-        };
-    }]);
+        // $urlRouterProvider.otherwise("#");
+    }])
 })();

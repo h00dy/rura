@@ -1,0 +1,13 @@
+<ul class="nav nav-sidebar">
+    <li role="presentation" class="disabled">
+        <form class="form-horizontal">
+            <div class="row form-group well well-sm">
+                <label for="searchbox" class="col-md-4 control-label">Wyszukaj:</label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" id="searchbox", ng-model='search.name'>
+                </div>
+            </div>
+        </form>
+    </li>
+    <firm-nav-item ng-repeat="firm in firms| filter:search" firm="firm"></firm-nav-item>
+</ul>
