@@ -1,15 +1,70 @@
 (function(angular){
     angular.module('document')
-    .directive("docTabItem", function(){
+    .directive("docTabItem", function(AgreementSide, Contractor, Delivered,
+                                      InvoiceResp, OtherResp, Sender, Tax){
         return {
             // replace: true,
             scope: {
                 type: '=',
-                docs: '='
+                docs: '=',
+                firm: '='
             },
             restrict: 'E',
-            controller: function($scope){
+            controller: function($scope, $modal, $log){
+                $scope.taxes = Tax.query();
+                $scope.agreementSides = AgreementSide.query();
+                $scope.contractors = Contractor.query();
+                $scope.delivereds = Delivered.query();
+                $scope.invoiceRespons = InvoiceResp.query();
+                $scope.otherRespons = OtherResp.query();
                 $scope.selected ={ document_type: "IN"};
+
+                $scope.animationsEnabled = true;
+                $scope.open = function (size) {
+
+                var modalInstance = $modal.open({
+                  animation: $scope.animationsEnabled,
+                  templateUrl: 'static/js/partials/doc-modal.html',
+                  controller: 'DocModalInstanceCtrl',
+                  size: size,
+                  resolve: {
+                    taxes: function () {
+                      return $scope.taxes;
+                    },
+                    contractors: function () {
+                      return $scope.contractors;
+                    },
+                    invoiceRespons: function () {
+                      return $scope.invoiceRespons;
+                    },
+                    otherRespons: function () {
+                      return $scope.otherRespons;
+                    },
+                    delivereds: function () {
+                      return $scope.delivereds;
+                    },
+                    docs: function () {
+                      return $scope.docs;
+                    },
+                    agrSides: function () {
+                      return $scope.agreementSides;
+                    },
+                    documentObject: function() {
+                        return {
+                            document_type: $scope.selected.document_type,
+                            flavor: $scope.type,
+                            firm: $scope.firm,
+                        }
+                    }
+                  }
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                  $scope.selectedItem = selectedItem;
+                }, function () {
+                  $log.info('Modal dismissed at: ' + new Date());
+                });
+              };
 
             },
             templateUrl: "static/js/partials/doc-tab-item.html",

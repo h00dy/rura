@@ -1,25 +1,22 @@
-<div class="row">
-  <h4>
-  <form class="form-horizontal">
-    <div class="form-group well">
-      <label for="selectInOut" class="col-md-2 control-label">Rodzaj dokumentów</label>
-      <div class="col-md-2">
+<div class="row"><div class="col-md-12"><span>&nbsp</span></div></div>
+  <form class="form-horizontal well">
+    <div class="form-group">
+      <div class="col-md-4 col-lg-3">
         <select id="selectInOut" class="form-control" ng-model="selected.document_type">
           <option ng-selected="true" value="IN">Dokumenty Przychodzące</option>
           <option value="OUT">Dokumenty Wychodzące</option>
         </select>
       </div>
-      <div class="col-md-1 col-md-offset-6">
-        <button type="button" class="btn btn-success btn-lg">
+      <div class="col-md-4 col-md-offset-4 col-lg-3 col-lg-offset-6">
+        <button type="button" class="btn btn-success btn-lg"  ng-click="open('lg')">
           <strong>
-            <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>&nbspNowy Dokument
+            <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true">&nbspNowy Dokument</span>
           </strong>
         </button>
       </div>
     </div>
   </form>
-  </h4>
-</div>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead ng-if="type==='invoice'">

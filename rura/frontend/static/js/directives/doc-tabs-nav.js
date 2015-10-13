@@ -5,6 +5,7 @@
             // replace: true,
             restrict: 'E',
             templateUrl: "static/js/partials/doc-tabs-nav.html",
+
         };
     });
 })(angular)

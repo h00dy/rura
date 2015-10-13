@@ -7,7 +7,7 @@ from .models import (Firm, Contractor, InvoiceResponsible, OtherResponsible,
 class TaxSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tax
-        fields = ('value',)
+        fields = ('value', 'id')
 
 
 class FirmSerializer(serializers.ModelSerializer):
@@ -19,37 +19,37 @@ class FirmSerializer(serializers.ModelSerializer):
 class ContractorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contractor
-        fields = ('name',)
+        fields = ('name', 'id')
 
 
 class InvoiceResponsibleSerializer(serializers.ModelSerializer):
     class Meta:
         model = InvoiceResponsible
-        fields = ('name',)
+        fields = ('name', 'id')
 
 
 class OtherResponsibleSerializer(serializers.ModelSerializer):
     class Meta:
         model = OtherResponsible
-        fields = ('name',)
+        fields = ('name', 'id')
 
 
 class DeliveredSerializer(serializers.ModelSerializer):
     class Meta:
         model = Delivered
-        fields = ('name',)
+        fields = ('name', 'id')
 
 
 class AgreementSideSerializer(serializers.ModelSerializer):
     class Meta:
         model = AgreementSide
-        fields = ('name',)
+        fields = ('name', 'id')
 
 
 class SenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sender
-        fields = ('name',)
+        fields = ('name', 'id')
 
 
 class InvoiceSerializer(serializers.ModelSerializer):
@@ -59,6 +59,8 @@ class InvoiceSerializer(serializers.ModelSerializer):
 
 
 class AgreementSerializer(serializers.ModelSerializer):
+    agr_date = serializers.DateTimeField(required=False)
+
     class Meta:
         model = Agreement
 

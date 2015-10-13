@@ -103,3 +103,15 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+.picker-dialog-bg {
+    z-index: 1050 !important;
+}
+
+.picker-dialog {
+    z-index: 1051 !important;
+}
+
+.css-form input.ng-invalid.ng-touched {
+  border-color: #FA787E;
+}

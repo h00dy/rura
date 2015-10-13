@@ -1,0 +1,75 @@
+<div>
+    <div class="form-group">
+        <label for="inputRegistryNr" class="col-sm-2 control-label">Nr w rejestrze</label>
+        <div class="col-sm-3">
+            <input type="text" name="regNr" class="form-control" id="inputRegistryNr" ng-model="newDoc.registry_nr" required>
+            <div ng-show="form.$submitted || form.regNr.$touched">
+                <div ng-show="form.regNr.$error.required">Podaj nr w rejestrze.</div>
+            </div>
+        </div>
+        <label for="creationDate" class="col-sm-2 control-label">Data otrzymania</label>
+        <div class="col-sm-3">
+            <input type="date" name="created" class="form-control" id="creationDate" ng-model="newDoc.received_date" required="">
+            <div ng-show="form.$submitted || form.created.$touched">
+                <div ng-show="form.created.$error.required">Podaj datę otrzymania dokumentu.</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="nettoPriceField" class="col-sm-2 control-label">Netto</label>
+        <div class="col-sm-3">
+            <input ng-keyup="calculateBrutto()" type="text" class="form-control" id="nettoPriceField" ng-model="newDoc.netto">
+        </div>
+        <label for="taxField" class="col-sm-2 control-label">VAT</label>
+        <div class="col-sm-3">
+            <select ng-click="calculatePrice()" id="taxField" class="form-control" ng-model="newDoc.tax">
+                <option ng-repeat="t in taxes" ng-selected="hasTaxValue(t.id)" value="{{t.id}}">{{t.value}}%</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="bruttoPriceField" class="col-sm-2 control-label">Brutto</label>
+        <div class="col-sm-3">
+            <input ng-keyup="calculateNetto()" type="text" class="form-control" id="bruttoPriceField" ng-model="newDoc.brutto">
+        </div>
+        <div class="col-sm-offset-2 col-sm-3">
+            <div class="checkbox">
+                <label class="control-label">
+                    <input type="checkbox" ng-model="newDoc.paid"> Zapłacono
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-show="newDoc.paid">
+        <label for="paymentDate" class="col-sm-2 col-sm-offset-5 control-label">Data zapłacenia</label>
+        <div class="col-sm-3">
+            <input type="date" class="form-control" id="paymentDate" ng-model="newDoc.payment_date">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="contractorField" class="col-sm-2 control-label">Kontrahent</label>
+        <div class="col-sm-3">
+            <select id="contractorField" class="form-control" ng-model="newDoc.contractor">
+                <option ng-repeat="c in contractors" ng-selected="hasContractorValue(c.id)" value="{{c.id}}">{{c.name}}</option>
+            </select>
+        </div>
+        <label for="responsibleFvField" class="col-sm-2 control-label">Osoba Opdowiedzialna</label>
+        <div class="col-sm-3">
+            <select id="responsibleFvField" class="form-control" ng-model="newDoc.responsible">
+                <option ng-repeat="r in invoiceRespons" ng-selected="hasResponsibleValue(r.id)" value="{{r.id}}">{{r.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="deliveredField" class="col-sm-2 control-label">Przekazano do</label>
+        <div class="col-sm-3">
+            <select id="deliveredField" class="form-control" ng-model="newDoc.delivered">
+                <option ng-repeat="d in delivereds" ng-selected="hasDeliveredValue(d.id)" value="{{d.id}}">{{d.name}}</option>
+            </select>
+        </div>
+        <label for="notesField" class="col-sm-2 control-label">Uwagi</label>
+        <div class="col-sm-3">
+            <textarea class="form-control" id="notesField" rows="2" ng-model="newDoc.notes"></textarea>
+        </div>
+    </div>
+</div>

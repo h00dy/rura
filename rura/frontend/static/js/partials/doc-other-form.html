@@ -1,0 +1,44 @@
+<div>
+    <div class="form-group">
+        <label for="inputRegistryNr" class="col-sm-2 control-label">Nr w rejestrze</label>
+        <div class="col-sm-3">
+            <input type="text" name="regNr" class="form-control" id="inputRegistryNr" ng-model="newDoc.registry_nr" required>
+            <div ng-show="form.$submitted || form.regNr.$touched">
+                <div ng-show="form.regNr.$error.required">Podaj nr w rejestrze.</div>
+            </div>
+        </div>
+        <label for="creationDate" class="col-sm-2 control-label">Data otrzymania</label>
+        <div class="col-sm-3">
+            <input type="date" name="created" class="form-control" id="creationDate" ng-model="newDoc.received_date" required="">
+            <div ng-show="form.$submitted || form.created.$touched">
+                <div ng-show="form.created.$error.required">Podaj datę otrzymania dokumentu.</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="senderField" class="col-sm-2 control-label">Nadawca</label>
+        <div class="col-sm-3">
+            <select id="senderField" class="form-control" ng-model="newDoc.sender">
+                <option ng-repeat="s in senders" ng-selected="hasSenderValue(s.id)" value="{{s.id}}">{{s.name}}</option>
+            </select>
+        </div>
+        <label for="otherRespField" class="col-sm-2 control-label">Osoba odpowiedzialna</label>
+        <div class="col-sm-3">
+            <select id="otherRespField" class="form-control" ng-model="newDoc.responsible">
+                <option ng-repeat="r in otherRespons" ng-selected="hasResponsibleValue(r.id)" value="{{r.id}}">{{r.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="descriptionField" class="col-sm-2 control-label">Opis</label>
+        <div class="col-sm-8">
+            <textarea class="form-control" id="descriptionField" rows="2" ng-model="newDoc.description"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="notesField" class="col-sm-2 control-label">Uwagi</label>
+        <div class="col-sm-8">
+            <textarea class="form-control" id="notesField" rows="2" ng-model="newDoc.notes"></textarea>
+        </div>
+    </div>
+</div>

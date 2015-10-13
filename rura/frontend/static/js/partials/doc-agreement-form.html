@@ -1,0 +1,42 @@
+<div>
+    <div class="form-group">
+        <label for="inputRegistryNr" class="col-sm-2 control-label">Nr w rejestrze</label>
+        <div class="col-sm-3">
+            <input type="text" name="regNr" class="form-control" id="inputRegistryNr" ng-model="newDoc.registry_nr" required>
+            <div ng-show="form.$submitted || form.regNr.$touched">
+                <div ng-show="form.regNr.$error.required">Podaj nr w rejestrze.</div>
+            </div>
+        </div>
+        <label for="creationDate" class="col-sm-2 control-label">Data otrzymania</label>
+        <div class="col-sm-3">
+            <input type="date" name="created" class="form-control" id="creationDate" ng-model="newDoc.received_date" required="">
+            <div ng-show="form.$submitted || form.created.$touched">
+                <div ng-show="form.created.$error.required">Podaj datę otrzymania dokumentu.</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="agrSideField" class="col-sm-2 control-label">Strona umowy</label>
+        <div class="col-sm-3">
+            <select id="agrSideField" class="form-control" ng-model="newDoc.agr_side">
+                <option ng-repeat="a in agrSides" ng-selected="hasAgrSideValue(a.id)" value="{{a.id}}">{{a.name}}</option>
+            </select>
+        </div>
+        <label for="agreementDate" class="col-sm-2 control-label">Data umowy</label>
+        <div class="col-sm-3">
+            <input type="date" class="form-control" id="agreementDate" ng-model="newDoc.agr_date">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="agrSubjectField" class="col-sm-2 control-label">Temat umowy</label>
+        <div class="col-sm-8">
+            <input type="text" name="agrSubject" class="form-control" id="agrSubjectField" ng-model="newDoc.agr_subject">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="notesField" class="col-sm-2 control-label">Uwagi</label>
+        <div class="col-sm-8">
+            <textarea class="form-control" id="notesField" rows="2" ng-model="newDoc.notes"></textarea>
+        </div>
+    </div>
+</div>
