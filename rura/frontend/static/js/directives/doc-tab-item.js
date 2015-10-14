@@ -10,17 +10,18 @@
                 firm: '='
             },
             restrict: 'E',
-            controller: function($scope, $modal, $log){
+            controller: function($scope, $modal, $log, $filter){
                 $scope.taxes = Tax.query();
                 $scope.agreementSides = AgreementSide.query();
                 $scope.contractors = Contractor.query();
                 $scope.delivereds = Delivered.query();
                 $scope.invoiceRespons = InvoiceResp.query();
                 $scope.otherRespons = OtherResp.query();
+                $scope.senders = Sender.query();
                 $scope.selected ={ document_type: "IN"};
 
                 $scope.animationsEnabled = true;
-                $scope.open = function (size) {
+                $scope.open = function (size, doc) {
 
                 var modalInstance = $modal.open({
                   animation: $scope.animationsEnabled,
@@ -43,6 +44,9 @@
                     delivereds: function () {
                       return $scope.delivereds;
                     },
+                    senders: function () {
+                      return $scope.senders;
+                    },
                     docs: function () {
                       return $scope.docs;
                     },
@@ -50,11 +54,16 @@
                       return $scope.agreementSides;
                     },
                     documentObject: function() {
+                      if (angular.isDefined(doc)){
+                        doc.flavor = $scope.type;
+                        return doc;
+                      } else {
                         return {
                             document_type: $scope.selected.document_type,
                             flavor: $scope.type,
                             firm: $scope.firm,
                         }
+                      }
                     }
                   }
                 });
@@ -64,6 +73,26 @@
                 }, function () {
                   $log.info('Modal dismissed at: ' + new Date());
                 });
+              };
+
+              $scope.getName = function (id, objects) {
+                var result = $filter('filter')(objects, function(e){
+                  return e.id === id;
+                });
+                if (result.length === 1){
+                  return result[0].name;
+                }
+              };
+              $scope.getValue = function (id, objects) {
+                var result = $filter('filter')(objects, function(e){
+                  return e.id === id;
+                });
+                if (result.length === 1){
+                  return result[0].value;
+                }
+              };
+              $scope.isDefined = function(obj){
+                return (angular.isDefined(obj) && (obj !== ""));
               };
 
             },

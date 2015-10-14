@@ -1,20 +1,23 @@
 (function(angular){
     angular.module('document')
     .controller("DocModalInstanceCtrl", function(
-                $scope, $filter, $modalInstance, $log, taxes, documentObject,
+                $scope, $filter, $modalInstance, $log, taxes, documentObject, senders,
                 docs, contractors, invoiceRespons, otherRespons, delivereds, agrSides,
                 Tax, Invoice, Agreement, Other){
         $scope.taxes = taxes;
+        $scope.senders = senders;
         $scope.contractors = contractors;
         $scope.invoiceRespons = invoiceRespons;
         $scope.otherRespons = otherRespons;
         $scope.delivereds = delivereds;
         $scope.agrSides = agrSides;
-        $scope.newDoc = documentObject;
+        $scope.newDoc = angular.copy(documentObject);
         $scope.newDoc.tax = setDefaultTax();
 
         $scope.clearData = function() {
-            $scope.newDoc = documentObject;
+            var flavor = $scope.newDoc.flavor;
+            $scope.newDoc = angular.copy(documentObject);
+            $scope.newDoc.flavor = flavor;
         };
 
         $scope.isValidForm = function (form){
