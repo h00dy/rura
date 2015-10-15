@@ -9,10 +9,7 @@
         </div>
         <label for="creationDate" class="col-sm-2 control-label">Data otrzymania</label>
         <div class="col-sm-3">
-            <input type="date" name="created" class="form-control" id="creationDate" ng-model="newDoc.received_date" required="">
-            <div ng-show="form.$submitted || form.created.$touched">
-                <div ng-show="form.created.$error.required">Podaj datę otrzymania dokumentu.</div>
-            </div>
+            <date-field id="creationDate" value='newDoc.received_date'></date-field>
         </div>
     </div>
     <div class="form-group">
@@ -43,7 +40,7 @@
     <div class="form-group" ng-show="newDoc.paid">
         <label for="paymentDate" class="col-sm-2 col-sm-offset-5 control-label">Data zapłacenia</label>
         <div class="col-sm-3">
-            <input type="date" class="form-control" id="paymentDate" ng-model="newDoc.payment_date">
+            <date-field id="paymentDate" value='newDoc.payment_date'></date-field>
         </div>
     </div>
     <div class="form-group">

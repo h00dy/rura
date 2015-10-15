@@ -9,10 +9,7 @@
         </div>
         <label for="creationDate" class="col-sm-2 control-label">Data otrzymania</label>
         <div class="col-sm-3">
-            <input type="date" name="created" class="form-control" id="creationDate" ng-model="newDoc.received_date" required="">
-            <div ng-show="form.$submitted || form.created.$touched">
-                <div ng-show="form.created.$error.required">Podaj datę otrzymania dokumentu.</div>
-            </div>
+            <date-field id="creationDate" name="created" value='newDoc.received_date'></date-field>
         </div>
     </div>
     <div class="form-group">
@@ -24,7 +21,7 @@
         </div>
         <label for="agreementDate" class="col-sm-2 control-label">Data umowy</label>
         <div class="col-sm-3">
-            <input type="date" class="form-control" id="agreementDate" ng-model="newDoc.agr_date">
+            <date-field id="agreementDate" name="agr_date" value='newDoc.agr_date'></date-field>
         </div>
     </div>
     <div class="form-group">
