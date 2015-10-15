@@ -14,6 +14,15 @@
         $scope.newDoc = angular.copy(documentObject);
         $scope.newDoc.tax = setDefaultTax();
 
+        var initialize = function(){
+            angular.forEach($scope.newDoc, function(value, key){
+                if (!angular.isString(value)&& key !=='paid' && key !== 'id'){
+                    $scope.newDoc[key] = value.toString();
+                }
+            })
+        };
+        initialize();
+
         $scope.clearData = function() {
             var flavor = $scope.newDoc.flavor;
             $scope.newDoc = angular.copy(documentObject);
@@ -34,9 +43,9 @@
                 taxId = documentObject.tax;
             } else {
                 $log.log("dupa");
-                taxId = taxes[0].id.toString();
+                taxId = taxes[0].id;
             }
-            return taxId;
+            return taxId.toString();
         };
 
         function getSelectedTax() {
@@ -74,7 +83,7 @@
             }
         };
         $scope.hasTaxValue = function (value){
-            return $scope.newDoc.tax === value;
+            return $scope.newDoc.tax === value.toString();
         };
         $scope.hasContractorValue = function (value){
             return $scope.newDoc.contractor === value;
