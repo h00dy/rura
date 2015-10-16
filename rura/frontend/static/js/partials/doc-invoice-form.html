@@ -1,10 +1,10 @@
 <div>
     <div class="form-group">
         <label for="inputRegistryNr" class="col-sm-2 control-label">Nr w rejestrze</label>
-        <div class="col-sm-3">
+        <div class="col-sm-3" ng-class="{'has-error': form.regNr.$error.required}">
             <input type="text" name="regNr" class="form-control" id="inputRegistryNr" ng-model="newDoc.registry_nr" required>
             <div ng-show="form.$submitted || form.regNr.$touched">
-                <div ng-show="form.regNr.$error.required">Podaj nr w rejestrze.</div>
+                <div ng-show="form.regNr.$error.required" class="text-danger"><strong>Podaj nr w rejestrze.</strong></div>
             </div>
         </div>
         <label for="creationDate" class="col-sm-2 control-label">Data otrzymania</label>

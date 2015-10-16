@@ -16,11 +16,16 @@
                     angular.forEach(docs, function (file, index) {
                         $scope.files.push(file);
                     });
-                    $scope.newDoc.scan = $scope.files[0].url;
+                    var scan = $scope.files[0].name + "|" + $scope.files[0].url;
+                    $scope.newDoc.scan = scan;
                 }
 
                 $scope.onCancel = function () {
                     console.log('Google picker close/cancel!');
+                }
+
+                $scope.hasFile = function () {
+                    return angular.isDefined($scope.newDoc.scan);
                 }
             }
         };

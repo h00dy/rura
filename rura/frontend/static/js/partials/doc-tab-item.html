@@ -18,7 +18,7 @@
   </form>
 
 <div class="table-responsive">
-  <table class="table table-striped">
+  <table class="table table-striped table-hover">
     <thead ng-if="type==='invoice'">
       <tr>
         <th>Data otrzymania</th>
@@ -60,58 +60,58 @@
     <tbody ng-if="type==='invoice'">
       <tr ng-repeat="d in docs | filter: selected">
         <td ng-click="open('lg', d)">{{d.received_date | date: 'yyyy-MM-dd'}}</td>
-        <td>{{d.registry_nr}}</td>
-        <td>{{d.netto}} zł</td>
-        <td>{{d.brutto}} zł</td>
-        <td>{{getValue(d.tax, taxes)}}%</td>
-        <td>
+        <td ng-click="open('lg', d)">{{d.registry_nr}}</td>
+        <td ng-click="open('lg', d)">{{d.netto}} zł</td>
+        <td ng-click="open('lg', d)">{{d.brutto}} zł</td>
+        <td ng-click="open('lg', d)">{{getValue(d.tax, taxes)}}%</td>
+        <td ng-click="open('lg', d)">
           <span ng-show="d.paid" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
           <span ng-show="!d.paid" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </td>
-        <td>{{d.payment_date | date: 'yyyy-MM-dd'}}</td>
-        <td>{{getName(d.contractor, contractors)}}</td>
-        <td>{{getName(d.responsible, invoiceRespons)}}</td>
-        <td>{{getName(d.delivered, delivereds)}}</td>
+        <td ng-click="open('lg', d)">{{d.payment_date | date: 'yyyy-MM-dd'}}</td>
+        <td ng-click="open('lg', d)">{{getName(d.contractor, contractors)}}</td>
+        <td ng-click="open('lg', d)">{{getName(d.responsible, invoiceRespons)}}</td>
+        <td ng-click="open('lg', d)">{{getName(d.delivered, delivereds)}}</td>
         <td>
-          <a ng-href="{{d.scan}}">
+          <a ng-href="{{getFileUrl(d.scan)}}">
             <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           </a>
         </td>
-        <td popover="{{d.notes}}" popover-placement="left" popover-trigger="mouseenter">
+        <td ng-click="open('lg', d)" popover="{{d.notes}}" popover-placement="left" popover-trigger="mouseenter">
             <span  ng-show="isDefined(d.notes)"class="glyphicon glyphicon-comment" aria-hidden="true"></span>
         </td>
       </tr>
     </tbody>
     <tbody ng-if="type==='agreement'">
       <tr ng-repeat="d in docs | filter: selected">
-        <td>{{d.received_date | date: 'yyyy-MM-dd'}}</td>
-        <td>{{d.registry_nr}}</td>
-        <td>{{d.agr_date | date: 'yyyy-MM-dd'}}</td>
-        <td>{{d.agr_subject}}</td>
-        <td>{{getName(d.agr_side, agreementSides)}}</td>
+        <td ng-click="open('lg', d)">{{d.received_date | date: 'yyyy-MM-dd'}}</td>
+        <td ng-click="open('lg', d)">{{d.registry_nr}}</td>
+        <td ng-click="open('lg', d)">{{d.agr_date | date: 'yyyy-MM-dd'}}</td>
+        <td ng-click="open('lg', d)">{{d.agr_subject}}</td>
+        <td ng-click="open('lg', d)">{{getName(d.agr_side, agreementSides)}}</td>
         <td>
-          <a ng-href="{{d.scan}}">
+          <a ng-href="{{getFileUrl(d.scan)}}">
             <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           </a>
         </td>
-        <td popover="{{d.notes}}" popover-placement="left" popover-trigger="mouseenter">
+        <td ng-click="open('lg', d)" popover="{{d.notes}}" popover-placement="left" popover-trigger="mouseenter">
             <span  ng-show="isDefined(d.notes)"class="glyphicon glyphicon-comment" aria-hidden="true"></span>
         </td>
       </tr>
     </tbody>
     <tbody ng-if="type==='other'">
       <tr ng-repeat="d in docs | filter: selected">
-        <td>{{d.received_date | date: 'yyyy-MM-dd'}}</td>
-        <td>{{d.registry_nr}}</td>
-        <td>{{d.description}}</td>
-        <td>{{getName(d.sender, senders)}}</td>
-        <td>{{getName(d.responsible, otherRespons)}}</td>
+        <td ng-click="open('lg', d)">{{d.received_date | date: 'yyyy-MM-dd'}}</td>
+        <td ng-click="open('lg', d)">{{d.registry_nr}}</td>
+        <td ng-click="open('lg', d)">{{d.description}}</td>
+        <td ng-click="open('lg', d)">{{getName(d.sender, senders)}}</td>
+        <td ng-click="open('lg', d)">{{getName(d.responsible, otherRespons)}}</td>
         <td>
-          <a ng-href="{{d.scan}}">
+          <a ng-href="{{getFileUrl(d.scan)}}">
             <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           </a>
         </td>
-        <td popover="{{d.notes}}" popover-placement="left" popover-trigger="mouseenter">
+        <td ng-click="open('lg', d)" popover="{{d.notes}}" popover-placement="left" popover-trigger="mouseenter">
             <span  ng-show="isDefined(d.notes)"class="glyphicon glyphicon-comment" aria-hidden="true"></span>
         </td>
       </tr>

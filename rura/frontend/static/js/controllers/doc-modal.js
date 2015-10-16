@@ -16,12 +16,29 @@
 
         var initialize = function(){
             angular.forEach($scope.newDoc, function(value, key){
+                if (key === 'received_date') {
+                    $scope.newDoc.received_date = new Date($scope.newDoc.received_date);
+                };
+                if (key === 'payment_date') {
+                    $scope.newDoc.payment_date = new Date($scope.newDoc.payment_date);
+                };
+                if (key === 'agr_date') {
+                    $scope.newDoc.agr_date = new Date($scope.newDoc.agr_date);
+                };
                 if (!angular.isString(value)&& key !=='paid' && key !== 'id'){
                     $scope.newDoc[key] = value.toString();
                 }
             })
         };
         initialize();
+
+        $scope.getTitle = function () {
+            if (angular.isDefined($scope.newDoc.id)) {
+                return "Edytuj Dokument";
+            } else {
+                return "Nowy Dokument";
+            }
+        };
 
         $scope.clearData = function() {
             var flavor = $scope.newDoc.flavor;
@@ -55,6 +72,19 @@
             if (result.length === 1){
                 return result[0];
             };
+        };
+
+        $scope.hasValue = function (obj) {
+            return angular.isDefined(obj);
+        };
+
+        $scope.getFileUrl = function () {
+            var fileData = $scope.newDoc.scan.split('|');
+            if (fileData.length > 1){
+                return fileData[1];
+            } else {
+                return fileData[0];
+            }
         };
 
         $scope.calculateBrutto = function () {
@@ -106,7 +136,53 @@
         $scope.isFlavor = function (flavor) {
             return $scope.newDoc.flavor === flavor;
         };
+        function updateValue(objects, new_obj, method) {
+            for (var i = objects.length - 1; i >= 0; i--) {
+                if (objects[i].id === new_obj.id){
+                    if (method === 'update'){
+                        objects[i] = new_obj;
+                    } else if (method === 'delete') {
+                        objects.splice(i,1);
+                    }
 
+                    break;
+                }
+            };
+        };
+        function updateDocument(docs, newDoc) {
+            switch (newDoc.flavor){
+                case 'invoice':
+                    $log.log("updating Invoice");
+                    Invoice.update(newDoc).$promise.then(function(){
+                            updateValue(docs, newDoc, 'update');
+                            $modalInstance.close();
+                        }, function(){
+                            $log.log("update failed");
+                        }
+                    );
+                    break;
+                case 'agreement':
+                    $log.log("updating Agreement");
+                    Agreement.update(newDoc).$promise.then(function(){
+                            updateValue(docs, newDoc, 'update');
+                            $modalInstance.close();
+                        }, function(){
+                            $log.log("update failed");
+                        }
+                    );
+                    break;
+                case 'other':
+                    $log.log("updating Other");
+                    Other.update(newDoc).$promise.then(function(){
+                            updateValue(docs, newDoc, 'update');
+                            $modalInstance.close();
+                        }, function(){
+                            $log.log("update failed");
+                        }
+                    );
+                    break;
+            }
+        };
         $scope.submitForm = function () {
             var doc = {};
 
@@ -133,17 +209,55 @@
                 }
                 doc = new Other($scope.newDoc);
             };
-            doc.$save().then(function(){
-                $modalInstance.close($scope.newDoc);
-                docs.push(doc); // or query for new list of docs Invoice.query({'id': $scope.newDoc.firm.id});
-            }, function(){
-                $log.log("i sie posrało");
-            });
-
+            if (hasKey('id', $scope.newDoc)){
+                updateDocument(docs, $scope.newDoc);
+            } else {
+                doc.$save().then(function(){
+                    $modalInstance.close($scope.newDoc);
+                    docs.push(doc); // or query for new list of docs Invoice.query({'id': $scope.newDoc.firm.id});
+                }, function(){
+                    $log.log("i sie posrało");
+                });
+            }
         };
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
+        };
+
+        $scope.deleteDoc = function() {
+            switch ($scope.newDoc.flavor){
+                case 'invoice':
+                    $log.log("Deleting Invoice");
+                    Invoice.delete($scope.newDoc).$promise.then(function(){
+                            updateValue(docs, $scope.newDoc, 'delete');
+                            $modalInstance.close();
+                        }, function(){
+                            $log.log("delete failed");
+                        }
+                    );
+                    break;
+                case 'agreement':
+                    $log.log("Deleting Agreement");
+                    Agreement.delete($scope.newDoc).$promise.then(function(){
+                            updateValue(docs, $scope.newDoc, 'delete');
+                            $modalInstance.close();
+                        }, function(){
+                            $log.log("delete failed");
+                        }
+                    );
+                    break;
+                case 'other':
+                    $log.log("Deleting Other");
+                    Other.delete($scope.newDoc).$promise.then(function(){
+                            updateValue(docs, $scope.newDoc, 'delete');
+                            $modalInstance.close();
+                        }, function(){
+                            $log.log("delete failed");
+                        }
+                    );
+                    break;
+            }
         };
     })
 })(angular)

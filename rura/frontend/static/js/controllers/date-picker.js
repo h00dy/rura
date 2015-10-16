@@ -4,9 +4,7 @@
       datepickerPopupConfig.currentText = 'Dzisiaj';
       datepickerPopupConfig.clearText = 'Wyczyść';
       datepickerPopupConfig.closeText = 'Zamknij';
-      $scope.is_required = function () {
-        return $scope.isrequired;
-      };
+
       $scope.today = function() {
         $scope.dt = new Date();
       };

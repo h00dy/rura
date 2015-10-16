@@ -91,6 +91,14 @@
                   return result[0].value;
                 }
               };
+              $scope.getFileUrl = function (scan) {
+                var fileData = scan.split('|');
+                if (fileData.length > 1){
+                    return fileData[1];
+                } else {
+                    return fileData[0];
+                }
+              };
               $scope.isDefined = function(obj){
                 return (angular.isDefined(obj) && (obj !== ""));
               };

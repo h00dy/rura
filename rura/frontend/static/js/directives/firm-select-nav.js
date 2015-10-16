@@ -8,9 +8,9 @@
             controller: function($scope){
                 this.setActiveFirm = function(firm){
                     $scope.activeFirm = firm;
-                    $scope.invoices = Invoice.query({'id': firm.id});
-                    $scope.agreements = Agreement.query({'id': firm.id});
-                    $scope.others = Other.query({'id': firm.id});
+                    $scope.invoices = Invoice.query({'firm': firm.id});
+                    $scope.agreements = Agreement.query({'firm`': firm.id});
+                    $scope.others = Other.query({'firm': firm.id});
                 };
                 this.getActiveFirm = function(){
                     return $scope.activeFirm;
