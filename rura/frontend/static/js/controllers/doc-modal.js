@@ -12,25 +12,31 @@
         $scope.delivereds = delivereds;
         $scope.agrSides = agrSides;
         $scope.newDoc = angular.copy(documentObject);
-        $scope.newDoc.tax = setDefaultTax();
+
 
         var initialize = function(){
             angular.forEach($scope.newDoc, function(value, key){
-                if (key === 'received_date') {
-                    $scope.newDoc.received_date = new Date($scope.newDoc.received_date);
-                };
-                if (key === 'payment_date') {
-                    $scope.newDoc.payment_date = new Date($scope.newDoc.payment_date);
-                };
-                if (key === 'agr_date') {
-                    $scope.newDoc.agr_date = new Date($scope.newDoc.agr_date);
-                };
-                if (!angular.isString(value)&& key !=='paid' && key !== 'id'){
-                    $scope.newDoc[key] = value.toString();
+                if (value === null){
+                    delete $scope.newDoc[key];
+                } else {
+                    if (key === 'received_date') {
+                        $scope.newDoc.received_date = new Date($scope.newDoc.received_date);
+                    };
+                    if (key === 'payment_date') {
+                        $scope.newDoc.payment_date = new Date($scope.newDoc.payment_date);
+                    };
+                    if (key === 'agr_date') {
+                        $scope.newDoc.agr_date = new Date($scope.newDoc.agr_date);
+                    };
+                    if (!angular.isString(value) && key !=='paid' && key !== 'id'){
+                        $scope.newDoc[key] = value.toString();
+                    }
                 }
-            })
+            });
+            $scope.newDoc.tax = setDefaultTax();
         };
         initialize();
+
 
         $scope.getTitle = function () {
             if (angular.isDefined($scope.newDoc.id)) {
@@ -56,7 +62,7 @@
 
         function setDefaultTax(){
             var taxId = 1;
-            if (hasKey('tax', documentObject)){
+            if (angular.isObject(documentObject.tax) && documentObject.tax.length > 0){
                 taxId = documentObject.tax;
             } else {
                 $log.log("dupa");
@@ -185,7 +191,14 @@
         };
         $scope.submitForm = function () {
             var doc = {};
-
+            angular.forEach($scope.newDoc, function(value, key){
+                if (value === null){
+                    delete $scope.newDoc[key];
+                }
+                if (key === 'received_date' || key === 'payment_date' || key === 'agr_date'){
+                    $scope.newDoc[key] = $filter('date')(value, 'yyyy-MM-ddT12:00:00');
+                }
+            });
             if ($scope.newDoc.flavor === 'invoice'){
                 $scope.newDoc.tax = +$scope.newDoc.tax;
                 $scope.newDoc.delivered = +$scope.newDoc.delivered;
@@ -196,9 +209,6 @@
                 doc = new Invoice($scope.newDoc);
             }
             else if ($scope.newDoc.flavor === 'agreement'){
-                if ($scope.newDoc.agr_date === null) {
-                    delete $scope.newDoc.agr_date;
-                }
                 if (hasKey('agr_side', $scope.newDoc)){
                     $scope.newDoc.agr_side = +$scope.newDoc.agr_side;
                 }

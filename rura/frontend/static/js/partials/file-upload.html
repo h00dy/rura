@@ -7,17 +7,6 @@
       </button>
     </div>
   </div>
-  <div class="form-group">
-    <div class="col-sm-6 col-sm-offset-3">
-      <div ng-repeat="file in files" class="well well-sm">
-        <a href="{{ file.url }}" target="_blank">
-          <span class="glyphicon glyphicon-file">
-            &nbsp{{file.name}}
-          </span>
-        </a>
-      </div>
-    </div>
-  </div>
   <div class="form-group" ng-if="hasFile()">
     <div class="col-sm-9 col-sm-offset-1 well well-sm">
       <a href="{{ getFileUrl() }}" target="_blank">

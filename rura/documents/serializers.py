@@ -47,13 +47,13 @@ class AgreementSideSerializer(serializers.ModelSerializer):
 
 
 class SenderSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Sender
         fields = ('name', 'id')
 
 
 class InvoiceSerializer(serializers.ModelSerializer):
-    # tax = TaxSerializer()
     class Meta:
         model = Invoice
 
@@ -66,5 +66,6 @@ class AgreementSerializer(serializers.ModelSerializer):
 
 
 class OtherSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Other

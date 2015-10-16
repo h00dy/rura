@@ -63,7 +63,8 @@ class Sender(Subject):
 
 class Document(models.Model):
     received_date = models.DateTimeField(
-        blank=False,
+        blank=True,
+        null=True,
         verbose_name="Data wpływu"
     )
     registry_nr = models.CharField(
@@ -116,10 +117,9 @@ class Invoice(Document):
     contractor = models.ForeignKey('Contractor',
                                    blank=True,
                                    null=True,
-                                   default=99999,
                                    on_delete=models.SET_NULL)
-    netto = models.FloatField("Kwota netto", blank=True)
-    brutto = models.FloatField("Kwota brutto", blank=True)
+    netto = models.FloatField("Kwota netto", blank=True, null=True)
+    brutto = models.FloatField("Kwota brutto", blank=True, null=True)
     tax = models.ForeignKey('Tax',
                             blank=True,
                             null=True,
@@ -134,7 +134,6 @@ class Invoice(Document):
     delivered = models.ForeignKey('Delivered',
                                   blank=True,
                                   null=True,
-                                  default=99999,
                                   on_delete=models.SET_NULL)
 
 
@@ -143,7 +142,7 @@ class Agreement(Document):
                                  blank=True,
                                  null=True,
                                  on_delete=models.SET_NULL)
-    agr_date = models.DateTimeField("Data umowy", blank=True)
+    agr_date = models.DateTimeField("Data umowy", blank=True, null=True)
     agr_subject = models.TextField("Przedmiot umowy", blank=True)
 
 
