@@ -18,60 +18,60 @@
   </form>
 
 <div class="table-responsive">
-  <table class="table table-striped table-hover">
+  <table class="table table-striped table-hover" ts-wrapper>
     <thead ng-if="type==='invoice'">
       <tr>
-        <th>Data otrzymania</th>
-        <th>Nr w rejestrze</th>
-        <th>Netto</th>
-        <th>Brutto</th>
-        <th>VAT</th>
-        <th>Zapłacono</th>
-        <th>Data zapłacenia</th>
-        <th>Kontrahent</th>
-        <th>Osoba odp.</th>
-        <th>Dostarczono do</th>
-        <th>Skan</th>
-        <th>Uwagi</th>
+        <th ts-criteria="received_date|date: 'yyyy-MM-dd'" ts-default>Data otrzymania</th>
+        <th ts-criteria="registry_nr">Nr w rejestrze</th>
+        <th ts-criteria="netto|parseFloat">Netto</th>
+        <th ts-criteria="brutto|parseFloat">Brutto</th>
+        <th ts-criteria="tax_value|parseInt">VAT</th>
+        <th ts-criteria="paid">Zapłacono</th>
+        <th ts-criteria="payment_date|date: 'yyyy-MM-dd'">Data zapłacenia</th>
+        <th ts-criteria="contractor_name">Kontrahent</th>
+        <th ts-criteria="responsible_name">Osoba odp.</th>
+        <th ts-criteria="delivered_name">Dostarczono do</th>
+        <th ts-criteria="scan">Skan</th>
+        <th ts-criteria="notes">Uwagi</th>
       </tr>
     </thead>
     <thead ng-if="type==='agreement'">
       <tr>
-        <th>Data otrzymania</th>
-        <th>Nr w rejestrze</th>
-        <th>Data umowy</th>
-        <th>Temat umowy</th>
-        <th>Strona umowy</th>
-        <th>Skan</th>
-        <th>Uwagi</th>
+        <th ts-criteria="received_date|date: 'yyyy-MM-dd'" ts-default>Data otrzymania</th>
+        <th ts-criteria="registry_nr">Nr w rejestrze</th>
+        <th ts-criteria="agr_date|date: 'yyyy-MM-dd'">Data umowy</th>
+        <th ts-criteria="agr_subject">Temat umowy</th>
+        <th ts-criteria="agr_side_name">Strona umowy</th>
+        <th ts-criteria="scan">Skan</th>
+        <th ts-criteria="notes">Uwagi</th>
       </tr>
     </thead>
     <thead ng-if="type==='other'">
       <tr>
-        <th>Data otrzymania</th>
-        <th>Nr w rejestrze</th>
-        <th>Opis</th>
-        <th>Nadawca</th>
-        <th>Osoba odp.</th>
-        <th>Skan</th>
-        <th>Uwagi</th>
+        <th ts-criteria="received_date|date: 'yyyy-MM-dd'" ts-default>Data otrzymania</th>
+        <th ts-criteria="registry_nr">Nr w rejestrze</th>
+        <th ts-criteria="description">Opis</th>
+        <th ts-criteria="sender_name">Nadawca</th>
+        <th ts-criteria="responsible_name">Osoba odp.</th>
+        <th ts-criteria="scan">Skan</th>
+        <th ts-criteria="notes">Uwagi</th>
       </tr>
     </thead>
     <tbody ng-if="type==='invoice'">
-      <tr ng-repeat="d in docs | filter: selected">
+      <tr ng-repeat="d in docs | filter: selected" ts-repeat>
         <td ng-click="open('lg', d)">{{d.received_date | date: 'yyyy-MM-dd'}}</td>
         <td ng-click="open('lg', d)">{{d.registry_nr}}</td>
         <td ng-click="open('lg', d)">{{d.netto}} zł</td>
         <td ng-click="open('lg', d)">{{d.brutto}} zł</td>
-        <td ng-click="open('lg', d)">{{getValue(d.tax, taxes)}}%</td>
+        <td ng-click="open('lg', d)" ng-bind="d.tax_value=getValue(d.tax, taxes)" ng-model="d.tax_value">{{d.tax_value}}%</td>
         <td ng-click="open('lg', d)">
           <span ng-show="d.paid" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
           <span ng-show="!d.paid" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </td>
         <td ng-click="open('lg', d)">{{d.payment_date | date: 'yyyy-MM-dd'}}</td>
-        <td ng-click="open('lg', d)">{{getName(d.contractor, contractors)}}</td>
-        <td ng-click="open('lg', d)">{{getName(d.responsible, invoiceRespons)}}</td>
-        <td ng-click="open('lg', d)">{{getName(d.delivered, delivereds)}}</td>
+        <td ng-click="open('lg', d)" ng-bind="d.contractor_name=getName(d.contractor, contractors)" ng-model="d.contractor_name">{{d.contractor_name}}</td>
+        <td ng-click="open('lg', d)" ng-bind="d.responsible_name=getName(d.responsible, invoiceRespons)" ng-model="d.responsible_name">{{d.responsible_name}}</td>
+        <td ng-click="open('lg', d)" ng-bind="d.delivered_name=getName(d.delivered, delivereds)" ng-model="d.delivered_name">{{d.delivered_name}}</td>
         <td>
           <a ng-href="{{getFileUrl(d.scan)}}">
             <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
@@ -83,12 +83,12 @@
       </tr>
     </tbody>
     <tbody ng-if="type==='agreement'">
-      <tr ng-repeat="d in docs | filter: selected">
+      <tr ng-repeat="d in docs | filter: selected" ts-repeat>
         <td ng-click="open('lg', d)">{{d.received_date | date: 'yyyy-MM-dd'}}</td>
         <td ng-click="open('lg', d)">{{d.registry_nr}}</td>
         <td ng-click="open('lg', d)">{{d.agr_date | date: 'yyyy-MM-dd'}}</td>
         <td ng-click="open('lg', d)">{{d.agr_subject}}</td>
-        <td ng-click="open('lg', d)">{{getName(d.agr_side, agreementSides)}}</td>
+        <td ng-click="open('lg', d)" ng-bind="d.agr_side_name=getName(d.agr_side, agreementSides)" ng-model="d.agr_side_name">{{d.agr_side_name}}</td>
         <td>
           <a ng-href="{{getFileUrl(d.scan)}}">
             <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
@@ -100,12 +100,12 @@
       </tr>
     </tbody>
     <tbody ng-if="type==='other'">
-      <tr ng-repeat="d in docs | filter: selected">
+      <tr ng-repeat="d in docs | filter: selected" ts-repeat>
         <td ng-click="open('lg', d)">{{d.received_date | date: 'yyyy-MM-dd'}}</td>
         <td ng-click="open('lg', d)">{{d.registry_nr}}</td>
         <td ng-click="open('lg', d)">{{d.description}}</td>
-        <td ng-click="open('lg', d)">{{getName(d.sender, senders)}}</td>
-        <td ng-click="open('lg', d)">{{getName(d.responsible, otherRespons)}}</td>
+        <td ng-click="open('lg', d)" ng-bind="d.sender_name=getName(d.sender, senders)" ng-model="d.sender_name">{{d.sender_name}}</td>
+        <td ng-click="open('lg', d)" ng-bind="d.responsible_name=getName(d.responsible, otherRespons)" ng-model="d.responsible_name">{{d.responsible_name}}</td>
         <td>
           <a ng-href="{{getFileUrl(d.scan)}}">
             <span class="glyphicon glyphicon-file" aria-hidden="true"></span>

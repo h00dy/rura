@@ -1,5 +1,5 @@
 (function(){
-    angular.module("document", ['ngResource', 'ui.bootstrap', 'ui.router', 'ngAnimate', 'lk-google-picker'])
+    angular.module("document", ['ngResource', 'ui.bootstrap', 'ui.router', 'ngAnimate', 'lk-google-picker', 'tableSort'])
 
     .config(['$resourceProvider', '$stateProvider', '$urlRouterProvider', 'lkGoogleSettingsProvider', '$httpProvider', function(
             $resourceProvider, $stateProvider, $urlRouterProvider, lkGoogleSettingsProvider, $httpProvider) {
@@ -14,6 +14,5 @@
             locale: 'pl',
             views: ['DocsUploadView().setIncludeFolders(true)']
         });
-        // $urlRouterProvider.otherwise("#");
     }])
 })();

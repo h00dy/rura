@@ -16,7 +16,7 @@
 
         var initialize = function(){
             angular.forEach($scope.newDoc, function(value, key){
-                if (value === null){
+                if (value === null || angular.isUndefined(value)){
                     delete $scope.newDoc[key];
                 } else {
                     if (key === 'received_date') {
@@ -192,7 +192,7 @@
         $scope.submitForm = function () {
             var doc = {};
             angular.forEach($scope.newDoc, function(value, key){
-                if (value === null){
+                if (value === null || angular.isUndefined(value)){
                     delete $scope.newDoc[key];
                 }
                 if (key === 'received_date' || key === 'payment_date' || key === 'agr_date'){
@@ -209,14 +209,11 @@
                 doc = new Invoice($scope.newDoc);
             }
             else if ($scope.newDoc.flavor === 'agreement'){
-                if (hasKey('agr_side', $scope.newDoc)){
-                    $scope.newDoc.agr_side = +$scope.newDoc.agr_side;
-                }
+                $scope.newDoc.agr_side = +$scope.newDoc.agr_side;
                 doc = new Agreement($scope.newDoc);
             } else {
-                if (hasKey('sender', $scope.newDoc)){
-                    $scope.newDoc.sender = +$scope.newDoc.sender;
-                }
+                $scope.newDoc.sender = +$scope.newDoc.sender;
+                $scope.newDoc.responsible = +$scope.newDoc.responsible;
                 doc = new Other($scope.newDoc);
             };
             if (hasKey('id', $scope.newDoc)){
