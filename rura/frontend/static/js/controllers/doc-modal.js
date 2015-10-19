@@ -3,7 +3,7 @@
     .controller("DocModalInstanceCtrl", function(
                 $scope, $filter, $modalInstance, $log, taxes, documentObject, senders,
                 docs, contractors, invoiceRespons, otherRespons, delivereds, agrSides,
-                Tax, Invoice, Agreement, Other){
+                Tax, Invoice, Agreement, Other, lkGoogleSettings) {
         $scope.taxes = taxes;
         $scope.senders = senders;
         $scope.contractors = contractors;
@@ -12,7 +12,9 @@
         $scope.delivereds = delivereds;
         $scope.agrSides = agrSides;
         $scope.newDoc = angular.copy(documentObject);
-
+        var CLIENT_ID = lkGoogleSettings.clientId;
+        var SCOPES = lkGoogleSettings.scopes;
+        var accessToken = null;
 
         var initialize = function(){
             angular.forEach($scope.newDoc, function(value, key){
@@ -232,7 +234,48 @@
             $modalInstance.dismiss('cancel');
         };
 
+        function checkAuth() {
+            gapi.auth.authorize(
+              {
+                'client_id': CLIENT_ID,
+                'scope': SCOPES.join(' '),
+                'immediate': true
+              }, handleAuthResult);
+          }
+
+        function handleAuthResult(authResult) {
+            if (authResult && !authResult.error) {
+              gapi.client.load('drive', 'v2', $scope.deleteFile);
+            } else {
+              gapi.auth.authorize(
+                {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+              handleAuthResult);
+            }
+          }
+
+        $scope.removeFromDrive = function () {
+            checkAuth();
+          }
+
+        $scope.deleteFile = function() {
+            fileId = $scope.newDoc.scan.split('|')[2];
+            $log.log("deleting file: " + fileId);
+            var request = gapi.client.drive.files.delete({
+                'fileId': fileId
+            });
+            request.execute(function(resp) {
+                if (!resp.error) {
+                    delete $scope.newDoc.scan;
+                    $log.log("File deleted");
+                } else if (resp.error.code == 401) {
+                    $log.log(resp.error);
+                } else if (resp.error.code == 404) {
+                    delete $scope.newDoc.scan;
+                }
+            });
+        };
         $scope.deleteDoc = function() {
+            $scope.removeFromDrive();
             switch ($scope.newDoc.flavor){
                 case 'invoice':
                     $log.log("Deleting Invoice");

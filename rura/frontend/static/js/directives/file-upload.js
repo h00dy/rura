@@ -16,7 +16,7 @@
                     angular.forEach(docs, function (file, index) {
                         $scope.files.push(file);
                     });
-                    var scan = $scope.files[0].name + "|" + $scope.files[0].url;
+                    var scan = $scope.files[0].name + "|" + $scope.files[0].url + "|" + $scope.files[0].id;
                     $scope.newDoc.scan = scan;
                 }
 

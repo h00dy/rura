@@ -16,9 +16,11 @@
       </div>
     </div>
   </form>
-
+<button ng-controller="ExcelCtrl" class="btn btn-link pull-right" ng-click="exportToExcel('#docTable')">
+        <span class="glyphicon glyphicon-share"></span>&nbspEksportuj
+    </button>
 <div class="table-responsive">
-  <table class="table table-striped table-hover" ts-wrapper>
+  <table class="table table-striped table-hover" ts-wrapper id='docTable'>
     <thead ng-if="type==='invoice'">
       <tr>
         <th ts-criteria="received_date|date: 'yyyy-MM-dd'" ts-default>Data otrzymania</th>
@@ -61,8 +63,8 @@
       <tr ng-repeat="d in docs | filter: selected" ts-repeat>
         <td ng-click="open('lg', d)">{{d.received_date | date: 'yyyy-MM-dd'}}</td>
         <td ng-click="open('lg', d)">{{d.registry_nr}}</td>
-        <td ng-click="open('lg', d)">{{d.netto}} zł</td>
-        <td ng-click="open('lg', d)">{{d.brutto}} zł</td>
+        <td ng-click="open('lg', d)">{{d.netto | currency }}</td>
+        <td ng-click="open('lg', d)">{{d.brutto | currency }}</td>
         <td ng-click="open('lg', d)" ng-bind="d.tax_value=getValue(d.tax, taxes)" ng-model="d.tax_value">{{d.tax_value}}%</td>
         <td ng-click="open('lg', d)">
           <span ng-show="d.paid" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -73,7 +75,7 @@
         <td ng-click="open('lg', d)" ng-bind="d.responsible_name=getName(d.responsible, invoiceRespons)" ng-model="d.responsible_name">{{d.responsible_name}}</td>
         <td ng-click="open('lg', d)" ng-bind="d.delivered_name=getName(d.delivered, delivereds)" ng-model="d.delivered_name">{{d.delivered_name}}</td>
         <td>
-          <a ng-href="{{getFileUrl(d.scan)}}">
+          <a ng-href="{{getFileUrl(d.scan)}}" target="_blank">
             <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           </a>
         </td>
@@ -90,7 +92,7 @@
         <td ng-click="open('lg', d)">{{d.agr_subject}}</td>
         <td ng-click="open('lg', d)" ng-bind="d.agr_side_name=getName(d.agr_side, agreementSides)" ng-model="d.agr_side_name">{{d.agr_side_name}}</td>
         <td>
-          <a ng-href="{{getFileUrl(d.scan)}}">
+          <a ng-href="{{getFileUrl(d.scan)}}" target="_blank">
             <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           </a>
         </td>
@@ -107,7 +109,7 @@
         <td ng-click="open('lg', d)" ng-bind="d.sender_name=getName(d.sender, senders)" ng-model="d.sender_name">{{d.sender_name}}</td>
         <td ng-click="open('lg', d)" ng-bind="d.responsible_name=getName(d.responsible, otherRespons)" ng-model="d.responsible_name">{{d.responsible_name}}</td>
         <td>
-          <a ng-href="{{getFileUrl(d.scan)}}">
+          <a ng-href="{{getFileUrl(d.scan)}}" target="_blank">
             <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
           </a>
         </td>
